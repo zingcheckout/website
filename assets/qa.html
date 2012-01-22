@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Ember.js - A JavaScript Application Framework</title>
+<link rel=stylesheet href="/styles/documentation.css" />
+<link type="text/css" rel="stylesheet" href="/styles/shCoreRDark.css"/>
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script src="http://cloud.github.com/downloads/emberjs/ember.js/ember-latest.min.js"></script>
+<script>
+  var App = Ember.Application.create({
+    SO_API_URL: "https://api.stackexchange.com/2.0/search?order=desc&sort=activity&tagged=emberjs&site=stackoverflow&pagesize=100&callback=?"
+  });
+
+  App.questionsController = Ember.ArrayProxy.create({
+    hasLoaded: false,
+    load: function() {
+      var self = this;
+      jQuery.getJSON(App.SO_API_URL, function(data) {
+        self.set('content', data.items);
+        self.set('hasLoaded', true);
+      });
+    }
+  });
+
+  $(function() {
+    App.questionsController.load();
+  });
+</script>
+<style>
+  #content td {
+    padding: 4px;
+  }
+</style>
+</head>
+
+<body>
+<div id="wrap">
+<div id="about">
+	<div id="logo">&nbsp;</div>
+	<p>
+    Ember is a JavaScript framework for creating ambitious web applications
+	</p>
+  <a class="button" href="https://github.com/downloads/emberjs/ember.js/ember-0.9.3.min.js">download</a>
+  <small>35k min + gzip | <a href="https://github.com/downloads/emberjs/ember.js/ember-0.9.3.js">debug build</a></small>
+
+	<a class="button" href="https://github.com/downloads/emberjs/starter-kit/starter-kit.0.9.3.zip">starter kit</a>
+	<ul id="nav">
+		<li><a href="index.html">docs</a></li>
+		<li><a href="/examples/">examples</a></li>
+		<li class="active"><a href="/qa.html">q &amp; a</a></li>
+	</ul>
+</div>
+<div id="github">
+  <a href="https://github.com/emberjs/ember.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/e6bef7a091f5f3138b8cd40bc3e114258dd68ddf/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub"></a>
+</div>
+<div id="content">
+  <div class="section">
+  <h2>Ember.js Q&A</h2>
+  <p>Have a question? <a href="http://stackoverflow.com/questions/ask?tags=emberjs" target="_blank">Ask it on StackOverflow</a></p>
+  <script type="text/x-handlebars">
+    {{#if App.questionsController.hasLoaded}}
+      <table>
+        <!--
+        <thead>
+          <tr><th>Answered?</th><th>Question</th></tr>
+        </thead>
+        -->
+        <tbody>
+          {{#each App.questionsController}}
+            <tr>
+              <td>
+                {{#if is_answered}}&#x2713;{{else}}&nbsp;{{/if}}
+              </td>
+              <td>
+                <a target="_blank" {{bindAttr href="link"}}>{{{title}}}</a>
+              </td>
+              <td>{{answer_count}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      Loading...
+    {{/if}}
+  </script>
+  </div>
+</div>
+
+</body>
+</html>
