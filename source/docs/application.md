@@ -1,4 +1,4 @@
-## Creating a Namespace
+## Defining Your Application Namespace
 
 Every Ember app should have an instance of `Ember.Application`. This object
 will serve as the globally-accessible namespace for all of the other classes

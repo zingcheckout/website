@@ -230,8 +230,8 @@ h3 {
 
 h4 {
   font-weight: bold;
-  font-size: $medium_font;
-  margin-bottom: 20px;
+  font-size: $small_font;
+  margin-bottom: 18px;
 }
 
 p {
@@ -274,6 +274,13 @@ code {
   @include border-radius(4px);
 }
 
+img.right {
+  float: right;
+}
+
+img.left {
+  float: left;
+}
 
 .sticky {
   top: 0px;
