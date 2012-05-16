@@ -57,7 +57,7 @@ rm -rf app/views/photos
 We should also ask Rails to generate our comment object and remove its views as well.
 
 ```
-rails generate scaffold Comment text:string
+rails generate scaffold Comment text:string photo:references
 rm -rf app/views/comments
 ```
 
@@ -80,36 +80,24 @@ class Comment < ActiveRecord::Base
 end
 ```
 
-If we look inside `db/migrate`, you'll see the database migrations that have been generated for us. We'll need to modify the `<datetime>_create_comments.rb` file to reference our photo model. 
-
-```ruby
-class CreateComments < ActiveRecord::Migration
-  def change
-    create_table :comments do |t|
-      t.string :text
-      t.references :photo
-      t.timestamps
-    end
-  end
-end
-```
-
 We can now run `rake db:migrate` to run these migrations and set up our database.
 
 ```
 → rake db:migrate
 ==  CreatePhotos: migrating ===================================================
 -- create_table(:photos)
-   -> 0.0184s
-==  CreatePhotos: migrated (0.0185s) ==========================================
+   -> 0.0008s
+==  CreatePhotos: migrated (0.0009s) ==========================================
 
 ==  CreateComments: migrating =================================================
 -- create_table(:comments)
-   -> 0.0015s
-==  CreateComments: migrated (0.0016s) ========================================
+   -> 0.0007s
+-- add_index(:comments, :photo_id)
+   -> 0.0003s
+==  CreateComments: migrated (0.0011s) ========================================
 ```
 
-Our server-side models are now setup and ready for use! What we've done here is basically create a  API server that allows basic CRUD actions for our photo and comment models.
+Our server-side models are now setup and ready for use! What we've done here is basically create an API server that allows basic CRUD actions for our photo and comment models.
 
 ### Creating our Client-side Models
 
@@ -144,7 +132,7 @@ That's it! ember-data now knows about the structure of our data.
 
 ### Setting up the State Manager
 
-Our Ember.js application will be managed by a state manager. The state manger handles what view is currently being displayed, as well as some other application login. Our default template will have created one for us at `app/assets/javascripts/states/app_states.js`. We'll want to modify it to look like this:
+Our Ember.js application will be managed by a state manager. The state manger handles what view is currently being displayed, as well as some other application logic. Our default template will have created one for us at `app/assets/javascripts/states/app_states.js`. We'll want to modify it to look like this:
 
 ```javascript
 Photoblog.StateManager = Ember.StateManager.extend({
@@ -210,7 +198,7 @@ Photoblog.IndexView = Ember.View.extend({
 
 This is where we define the Ember.js object which manages the view. We simply provide it with a `templateName` property, which points to our handlebars template, and a `controller` property, which manages the view. Here's the template that defines what the index view looks like. Make yours look like the following:
 
-```html
+```
 <h1>My Photoblog</h1>
 
 {{#each controller}}
@@ -249,7 +237,7 @@ Our view has a controller, the Photoblog.photosController, which will create in 
 
 For each photo managed by the photosController, we will create a subview with the following contents, and have its `content` property be bound to the photo object.
 
-```html
+```
     <div class="photo">
       <h2>{{content.title}}</h2>
       <img {{bindAttr src="content.url"}}>
@@ -341,16 +329,16 @@ Next, create the new view.
 rails generate ember:view create photo
 ```
 
-Modify the template for the create view at `app/assets/javascripts/templates/photos/create.handlebars` to look like this:
+Modify the template for the create view at `app/assets/javascripts/templates/photo/create.handlebars` to look like this:
 
 ```html
 <h1>Add a New Photo</h1>
-{{template "photos/_form"}}
+{{template "photo/_form"}}
 ```
 
 We use the handlebars expression `template` to refer to another template we'd like to load, in this case, the _form template. This should be very familiar to rails users. You'll see why this is important later.
 
-Let's create the `_form` template in `app/assets/javascripts/templates/photos/_form.handlebars`. It will include only the form elements for our photo, like so:
+Let's create the `_form` template in `app/assets/javascripts/templates/photo/_form.handlebars`. It will include only the form elements for our photo, like so:
 
 ```html
 <label for="title-field">Title:</label>{{view Ember.TextField id="title-field" valueBinding="controller.content.title"}}
