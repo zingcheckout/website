@@ -3,7 +3,9 @@ App.ApplicationController = Ember.Controller.extend({
     var input = this.get('input');
 
     var template;
-    var outputView = Ember.View.create();
+    var outputView = Ember.View.create({
+      controller: App.blogData
+    });
     this.set('error', null);
 
     try {
