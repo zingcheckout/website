@@ -1,10 +1,4 @@
-window.App = Ember.Application.create({
-  rootElement: '#content'
-});
-
-$(function() {
-
-var appController = Ember.Controller.create({
+App.ApplicationController = Ember.Controller.extend({
   inputDidChange: function() {
     var input = this.get('input');
 
@@ -22,17 +16,11 @@ var appController = Ember.Controller.create({
       var iframe = $('#playground-iframe')[0].contentDocument.body;
       $(iframe).empty().append(outputView.$());
     } catch (e) {
-      this.set('error', e.message);
+      var error = e.message;
+      error = error.replace(/\n/g, '<br>');
+      this.set('error', error);
     }
+  }.observes('input'),
 
-  }.observes('input')
-});
-
-var appView = Ember.View.create({
-  controller: appController,
-  templateName: "app"
-});
-appView.appendTo('#input');
-
-App.appController = appController;
+  currentTab: 'controller'
 });

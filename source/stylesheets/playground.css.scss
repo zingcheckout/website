@@ -28,7 +28,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  padding: 30px;
+  padding: 5px 30px;
 }
 
 .resizer {
@@ -37,4 +37,12 @@
   width: 10px;
   top: 0;
   bottom: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.CodeMirror {
+  border: 1px solid black;
 }

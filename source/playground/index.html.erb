@@ -1,20 +1,9 @@
 <% content_for :head do %>
-  <script src="/playground/lib/codemirror/codemirror.js"></script>
-  <script src="/playground/lib/codemirror/modes/javascript/javascript.js"></script>
-  <script src="/playground/lib/codemirror/modes/css/css.js"></script>
-  <script src="/playground/lib/codemirror/modes/xml/xml.js"></script>
-  <script src="/playground/lib/codemirror/modes/htmlmixed/htmlmixed.js"></script>
-  <script src="/playground/lib/handlebars-1.0.rc.1.js"></script>
-  <script src="/playground/lib/ember.js"></script>
-  <script src="/playground/app.js"></script>
-  <script src="/playground/panels.js"></script>
+  <%= javascript_include_tag "playground/app" %>
 
   <%= stylesheet_link_tag "playground" %>
-  <link rel="stylesheet" href="/playground/lib/codemirror/codemirror.css">
+  <%= stylesheet_link_tag "codemirror" %>
 <% end %>
-
-<script type="text/x-handlebars" data-template-name="app">
-</script>
 
 <%#<p>Welcome to the Ember.js Handlebars playground! Here, you can%>
 <%#easily experiment with all of the templating tools Ember.js makes%>
@@ -25,10 +14,18 @@
 
 <script type="text/x-handlebars">
   {{#view App.Panels}}
-    {{#view App.Panel}} 
-      <p>Input</p>
-      <div id="input"></div>
-      {{view Ember.TextArea valueBinding="input"}}
+    {{#view App.Panel}}
+    <a {{action showController}}>Controller</a>
+    <a {{action showTemplate}}>Template</a>
+
+      {{#view App.TabView name="controller"}}
+        Controller
+      {{/view}}
+
+      {{#view App.TabView name="template"}}
+        {{view App.CodeMirrorView valueBinding="input"}}
+      {{/view}}
+
     {{/view}}
 
     {{view App.ResizeThumb}}
@@ -36,7 +33,9 @@
     {{#view App.Panel}}
       <p>Output</p>
       {{#if error}}
-        <span style="color: red">{{error}}</span>
+        <div style="color: red; font-family: monospace">
+          {{{error}}}
+        </div>
       {{/if}}
       <iframe id="playground-iframe"></iframe>
     {{/view}}
