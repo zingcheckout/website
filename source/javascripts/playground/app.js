@@ -10,6 +10,7 @@
 //= require_self
 //
 //= require_tree ./views
+//= require_tree ./data
 //= require_tree ./controllers
 //= require ./router
 

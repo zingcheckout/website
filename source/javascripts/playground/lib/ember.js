@@ -23019,7 +23019,6 @@ Ember.Select = Ember.View.extend(
     set(this, 'selection', content.objectAt(selectedIndex));
   },
 
-
   _changeMultiple: function() {
     var options = this.$('option:selected'),
         prompt = get(this, 'prompt'),

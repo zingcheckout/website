@@ -6,6 +6,7 @@ App.ApplicationController = Ember.Controller.extend({
     var outputView = Ember.View.create({
       controller: App.blogData
     });
+    console.log(App.blogData);
     this.set('error', null);
 
     try {

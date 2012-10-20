@@ -15,11 +15,10 @@
 <script type="text/x-handlebars">
   {{#view App.Panels}}
     {{#view App.Panel}}
-    <a {{action showController}}>Controller</a>
-    <a {{action showTemplate}}>Template</a>
+      {{view App.TabSelectView valueBinding="currentTab"}}
 
       {{#view App.TabView name="controller"}}
-        Controller
+        <pre>{{App.blogDataString}}</pre>
       {{/view}}
 
       {{#view App.TabView name="template"}}

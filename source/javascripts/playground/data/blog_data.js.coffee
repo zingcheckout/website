@@ -1,16 +1,18 @@
-var loremIpsum = "You probably haven't heard of them synth farm-to-table keytar dolore cardigan, fixie lomo wayfarers. Culpa iphone lo-fi, proident anim scenester labore typewriter. Swag placeat art party laborum aesthetic. Locavore tofu labore pickled excepteur vice. Polaroid mustache elit, pickled ethical accusamus semiotics selvage direct trade keytar ex vegan. DIY pour-over quis quinoa, selvage put a bird on it in truffaut proident vinyl +1 organic sustainable. Anim american apparel 8-bit freegan, kale chips ethical quis hella yr blog single-origin coffee."
+loremIpsum = "You probably haven't heard of them synth farm-to-table keytar dolore cardigan, fixie lomo wayfarers. Culpa iphone lo-fi, proident anim scenester labore typewriter. Swag placeat art party laborum aesthetic. Locavore tofu labore pickled excepteur vice. Polaroid mustache elit, pickled ethical accusamus semiotics selvage direct trade keytar ex vegan. DIY pour-over quis quinoa, selvage put a bird on it in truffaut proident vinyl +1 organic sustainable. Anim american apparel 8-bit freegan, kale chips ethical quis hella yr blog single-origin coffee."
 
-App.blogData = [
+App.blogDataString = """
+[
   {
     title: "Destroying Your Enemies, One Post at a Time",
     author: {
       firstName: "Yehuda",
       lastName: "Katz"
     },
+
     body: loremIpsum,
     comments: [
       {
-        body: "First post"
+        body: "First post",
         author: {
           firstName: "Tom",
           lastName: "Dale"
@@ -38,3 +40,6 @@ App.blogData = [
     ]
   }
 ];
+"""
+
+App.blogData = eval(App.blogDataString)
