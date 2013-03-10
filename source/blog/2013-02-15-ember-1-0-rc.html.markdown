@@ -1,6 +1,6 @@
 ---
 title: Ember 1.0 RC
-tags: Recent Posts
+tags: Releases
 ---
 
 Today at Ember Camp, we announced the release of Ember.js 1.0 RC1.

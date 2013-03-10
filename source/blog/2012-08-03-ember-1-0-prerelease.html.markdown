@@ -1,6 +1,6 @@
 --- 
 title: Ember 1.0 Prerelease
-tags: Recent Posts
+tags: Releases
 ---
 
 We're pleased to announce the Ember 1.0 Prerelease. It's been a couple
